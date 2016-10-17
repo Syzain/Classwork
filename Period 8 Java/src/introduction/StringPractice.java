@@ -6,77 +6,88 @@ public class StringPractice {
 	
 	static Scanner input;
 	static String user;
-
+	
 	public static void main(String[] args) {
-		//demonstrateStringMethods();
-		createFields();
-		promptName();
-		promptForever();
-	}
-	public static void promptName(){
+		 //demostrateStringMethods();
+		 createFields();
+		 promptName();
+		 promptForever();
+	}	
+	
+	public static void promptName() {
 		print("Enter your name");
 		user = input.nextLine();
-		print("Glad to meet you, "+user+".  For the rest of time, I will call you.  "
-				+user+" You may call me Computer-Chan.  We should become friends.");
+		print("Glad to meet you, "+user+". "
+			+ "For the rest of time, I will call you "+user+"."
+			+ " You may call me Computer."
+			+ " We should become friends.");
 	}
-	public static void promptForever(){
+
+	public static void promptForever() {
 		while(true){
 			promptInput();
-		}
+		}	
 	}
-	public static void promptInput(){
-		print("Please type something");
+
+	private static void promptInput() {
+		print("Please type something, "+user+".");
 		String userInput = input.nextLine();
-		print("Congratulations! You Typed: "+userInput);
+		print("Congratulations! You typed: "+userInput);
 	}
 	
-	public static void createFields() {
-		input = new Scanner(System.in);
+	private static void createFields() {
+		input = new Scanner (System.in);
 		user = "";
 	}
 	
-	public static void demonstrateStringMethods(){
+	public static void demostrateStringMethods(){
 		String text1 = new String("Hello World");
-		String text2 = "Hello World";
+		String text2 = "Hello World";//same as above
 		
-		if(text1.equals(text2)){
-		System.out.println("These strings are equal");
+		if (text1.equals(text2)){
+			print("These strings are equal:");
 		}
-		System.out.println(text1);
+		print(text1);
 		print(text2);
 		
 		String word1 = "Aardvark";
-		String word2 = "Zyzzyve";
+		String word2 = "Zyzzyva";
 		
-		if(word1.compareTo(word2) < 0){
-			print("word 1 comes before word 2");
+		if(word1.compareTo(word2) <0){
+			print("word1 comes before word2");
 		}
 	}
-	public static void print(String s){
-		String printString = s;
-		int cutoff = 10;
-		if(printString.length() > cutoff);{
-			for(int i = 0; i <s.length(); i++){
-			printString += getCut(s,cutoff, i+1)+"\n";
-			}
+	
+	public static void print(String s) {
+		String printString = "";
+		int cutoff = 35;
+		//check for words to add, IOW s has a length >0
+		while(s.length() >0){
+			String cut = "";
+			String nextWord = "";
+			//check to see if the next word will fit on line
+			//there must still be words to add
+			while(cut.length() +nextWord.length() <cutoff && s.length() >0){
+				//add the next word to the line
+				cut += nextWord;
+				
+				s = s.substring(nextWord.length());
+				
+				//identify the following word without the space
+				int endOfWord = s.indexOf(" ");
+				//if there are no more spaces, 
+				//this is the last word so add the whole thing
+				if(endOfWord == -1){
+					endOfWord = s.length() -1;//-1 for index
+				}
+				
+				nextWord = s.substring(0, endOfWord+1);
+			}			
+			
+			printString += cut+"\n";
 		}
+		
 		System.out.println(printString);
 	}
-	private static String getCut(String s, int cutoff, int cut){
-			int cutIndex = cut * cutoff;
-			if(cutIndex >s.length()) cutIndex = s.length();
-			String currentCut = s.substring(0,cutIndex);
-		
-			int indexOfLastSpace = currentCut.length()-1;
-			for(int i = currentCut.length()-1; i>=0; i--){
-				String letter = currentCut.substring(i,  i+1);
-				if(letter.equals(" ")){
-					indexOfLastSpace = i;
-					break;
-				}
-			}	
-			currentCut = currentCut.substring(0,indexOfLastSpace);
-			return currentCut;
-		
-	}
+
 }
